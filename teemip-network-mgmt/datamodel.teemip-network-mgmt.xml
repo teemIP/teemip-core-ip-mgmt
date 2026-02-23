@@ -2008,7 +2008,8 @@
         <field id="networkdevicevirtualinterfaces_list" xsi:type="AttributeLinkedSet" _delta="define">
           <linked_class>NetworkDeviceVirtualInterface</linked_class>
           <ext_key_to_me>networkdevice_id</ext_key_to_me>
-          <edit_mode/>
+          <edit_mode>in_place</edit_mode>
+          <tracking_level>all</tracking_level>
         </field>
       </fields>
       <presentation>
