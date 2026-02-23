@@ -2041,7 +2041,9 @@
                   <dashlet id="physicalinterfaces_list" xsi:type="DashletObjectList">
                     <rank>10</rank>
                     <title>Class:VLAN/Attribute:physicalinterfaces_list</title>
-                    <query><![CDATA[SELECT lnkPhysicalInterfaceToVLAN WHERE vlan_id = :this->id]]></query>
+                    <query><![CDATA[SELECT PhysicalInterface AS I
+                                    JOIN lnkPhysicalInterfaceToVLAN AS lnk ON lnk.physicalinterface_id = I.id
+                                    WHERE lnk.vlan_id = :this->id]]></query>
                     <menu>true</menu>
                   </dashlet>
                 </dashlets>
@@ -2052,7 +2054,9 @@
                   <dashlet id="logicalinterfaces_list" xsi:type="DashletObjectList">
                     <rank>10</rank>
                     <title>Class:VLAN/Attribute:logicalinterfaces_list</title>
-                    <query><![CDATA[SELECT lnkLogicalInterfaceToVLAN WHERE vlan_id = :this->id]]></query>
+                    <query><![CDATA[SELECT LogicalInterface AS I
+                                    JOIN lnkLogicalInterfaceToVLAN AS lnk ON lnk.logicalinterface_id = I.id
+                                    WHERE lnk.vlan_id = :this->id]]></query>
                     <menu>true</menu>
                   </dashlet>
                 </dashlets>
@@ -2063,7 +2067,9 @@
                   <dashlet id="networkdevicevirtualinterfaces_list" xsi:type="DashletObjectList">
                     <rank>10</rank>
                     <title>Class:VLAN/Attribute:networkdevicevirtualinterfaces_list</title>
-                    <query><![CDATA[SELECT lnkNetworkDeviceVirtualInterfaceToVLAN WHERE vlan_id = :this->id]]></query>
+                    <query><![CDATA[SELECT NetworkDeviceVirtualInterface AS I
+                                    JOIN lnkNetworkDeviceVirtualInterfaceToVLAN AS lnk ON lnk.networkdevicevirtualinterface_id = I.id
+                                    WHERE lnk.vlan_id = :this->id]]></query>
                     <menu>true</menu>
                   </dashlet>
                 </dashlets>
@@ -2074,7 +2080,9 @@
                   <dashlet id="aggregatelinks_list" xsi:type="DashletObjectList">
                     <rank>10</rank>
                     <title>Class:VLAN/Attribute:aggregatelinks_list</title>
-                    <query><![CDATA[SELECT lnkAggregateLinkToVLAN WHERE vlan_id = :this->id]]></query>
+                    <query><![CDATA[SELECT AggregateLink AS I
+                                    JOIN lnkAggregateLinkToVLAN AS lnk ON lnk.aggregatelink_id = I.id
+                                    WHERE lnk.vlan_id = :this->id]]></query>
                     <menu>true</menu>
                   </dashlet>
                 </dashlets>
