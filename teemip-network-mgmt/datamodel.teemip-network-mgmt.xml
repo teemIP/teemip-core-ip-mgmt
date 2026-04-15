@@ -756,6 +756,9 @@
             <item id="name">
               <rank>30</rank>
             </item>
+            <item id="type_id">
+              <rank>40</rank>
+            </item>
           </items>
         </summary>
       </presentation>
