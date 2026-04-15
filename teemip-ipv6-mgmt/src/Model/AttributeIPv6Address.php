@@ -20,7 +20,7 @@ class AttributeIPv6Address extends AttributeString
 	 *
 	 * @return mixed|\TeemIp\TeemIp\Extension\IPv6Management\Model\ormIPv6
 	 */
-	public function GetDefaultValue(DBObject $oHostObject = null)
+	public function GetDefaultValue(?DBObject $oHostObject = null)
 	{
 		return new ormIPv6;
 	}

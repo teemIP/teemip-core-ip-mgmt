@@ -1,6 +1,6 @@
 <?php
 /*
- * @copyright   Copyright (C) 2010-2024 TeemIp
+ * @copyright   Copyright (C) 2010-2026 teemIP
  * @license     http://opensource.org/licenses/AGPL-3.0
  */
 
@@ -33,7 +33,7 @@ class TeemIpNewsroomProvider extends NewsroomProviderBase
 	/**
 	 * @inheritDoc
 	 */
-	public function IsApplicable(User $oUser = null): bool
+	public function IsApplicable(?User $oUser = null): bool
 	{
 		if(!$this->IsEnabled())
 		{
