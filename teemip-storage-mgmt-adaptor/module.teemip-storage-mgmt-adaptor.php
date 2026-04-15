@@ -6,7 +6,7 @@
 
 SetupWebPage::AddModule(
 	__FILE__,
-	'teemip-storage-mgmt-adaptor/3.2.3-dev',
+	'teemip-storage-mgmt-adaptor/3.3.0',
 	array(
 		// Identification
 		//

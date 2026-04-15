@@ -6,7 +6,7 @@
 
 SetupWebPage::AddModule(
 	__FILE__, // Path to the current file, all other file names are relative to the directory containing this file
-	'teemip-ipv6-mgmt/3.2.3-dev',
+	'teemip-ipv6-mgmt/3.3.0',
 	array(
 		// Identification
 		//
