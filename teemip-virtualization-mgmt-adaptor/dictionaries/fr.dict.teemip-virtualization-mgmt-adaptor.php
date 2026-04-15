@@ -1,6 +1,6 @@
 <?php
 /*
- * @copyright   Copyright (C) 2010-2025 TeemIp
+ * @copyright   Copyright (C) 2010-2026 teemIP
  * @license     http://opensource.org/licenses/AGPL-3.0
  */
 
