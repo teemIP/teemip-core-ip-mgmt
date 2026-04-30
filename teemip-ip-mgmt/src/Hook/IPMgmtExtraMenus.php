@@ -23,7 +23,7 @@ use URLPopupMenuItem;
 use UserRights;
 use utils;
 
-class IPMgmtExtraMenus implements iPopupMenuExtension
+class   IPMgmtExtraMenus implements iPopupMenuExtension
 {
 	const MODULE_CODE = 'teemip-ip-mgmt';
 	const BLOCK_NAV_FUNCTION_CODE = 'block_navigation';
