@@ -116,6 +116,20 @@ class _IPv4Address extends IPAddress {
                 $this->Set('subnet_id', $oSubnet->GetKey());
             }
         }
+
+        $iIpRangeId = $this->Get('range_id');
+        if ($iIpRangeId==0) {
+            // No IP range set yet. Look for the only one that IP may belong to.
+            $oIpRangeSet = new CMDBObjectSet(DBObjectSearch::FromOQL("SELECT IPv4Range AS r WHERE INET_ATON(r.firstip) <= INET_ATON(:ip) AND INET_ATON(:ip) <= INET_ATON(r.lastip) AND r.org_id = :org_id"), array(), array(
+                'ip' => $sIp,
+                'org_id' => $iOrgId,
+            ));
+            if ($oIpRangeSet->Count()!=0) {
+                $oIpRange = $oIpRangeSet->Fetch();
+                $this->Set('range_id', $oIpRange->GetKey());
+            }
+        }
+
     }
 
     /**
@@ -160,16 +174,6 @@ class _IPv4Address extends IPAddress {
                     $this->AddCheckIssue(Dict::Format('UI:IPManagement:Action:New:IPAddress:NotInRange'));
 
                     return;
-                }
-            } else {
-                // If not look for IP Range that IP may belong to
-                $oIpRangeSet = new CMDBObjectSet(DBObjectSearch::FromOQL("SELECT IPv4Range AS r WHERE INET_ATON(r.firstip) <= INET_ATON(:ip) AND INET_ATON(:ip) <= INET_ATON(r.lastip) AND r.org_id = :org_id"), array(), array(
-                    'ip' => $sIp,
-                    'org_id' => $iOrgId,
-                ));
-                if ($oIpRangeSet->Count()!=0) {
-                    $oIpRange = $oIpRangeSet->Fetch();
-                    $this->Set('range_id', $oIpRange->GetKey());
                 }
             }
 

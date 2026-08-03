@@ -3590,6 +3590,7 @@
           <filter><![CDATA[SELECT IPv4Subnet AS s WHERE s.org_id = :this->org_id]]></filter>
           <dependencies>
             <attribute id="org_id"/>
+            <attribute id="ip"/>
          </dependencies>
           <sql>subnet_id</sql>
           <target_class>IPv4Subnet</target_class>
