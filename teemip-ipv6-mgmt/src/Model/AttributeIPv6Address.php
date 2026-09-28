@@ -154,6 +154,11 @@ class AttributeIPv6Address extends AttributeString
 	}
 
 	/**
+	 * iTop <= 3.2: exposes the '_text'/'_comp' physical columns as extra OQL filter codes
+	 * via MetaModel::$m_aFilterAttribList. This has been removed in 3.3, where
+	 * GetMagicFields() below takes over instead; kept here for 3.2 LTS compatibility - it is
+	 * simply never called under 3.3 (no such method/mechanism left in that core anymore).
+	 *
 	 * @return array
 	 */
 	public function GetFilterDefinitions()
@@ -162,6 +167,19 @@ class AttributeIPv6Address extends AttributeString
 			$this->GetCode() => $this->GetCode(),
 			$this->GetCode().'_text' => $this->GetCode(),
 			$this->GetCode().'_comp' => $this->GetCode(),
+		);
+	}
+
+	/**
+	 * iTop >= 3.3: replacement for GetFilterDefinitions() above.
+	 *
+	 * @return string[]
+	 */
+	public function GetMagicFields()
+	{
+		return array(
+			$this->GetCode().'_text',
+			$this->GetCode().'_comp',
 		);
 	}
 
