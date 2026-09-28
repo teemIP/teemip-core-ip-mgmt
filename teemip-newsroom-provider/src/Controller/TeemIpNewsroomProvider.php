@@ -18,8 +18,8 @@ class TeemIpNewsroomProvider extends NewsroomProviderBase
 	const API_VERSION = '1.0';
 	const DEFAULT_SETTING_ENABLED = true;
 	const DEFAULT_SETTING_DEBUG = false;
-	const DEFAULT_SETTING_ENDPOINT = 'https://support.teemip.net/pages/exec.php?exec_module=teemip-newsroom-editor&exec_page=index.php';
-    const TEEMIP_NEWSROOM_LABEL = 'TeemIP Headlines';
+	const DEFAULT_SETTING_ENDPOINT = 'https://support.teemip.com/pages/exec.php?exec_module=teemip-newsroom-editor&exec_page=index.php';
+    const TEEMIP_NEWSROOM_LABEL = 'teemIP Headlines';
 
 	/**
 	 * @inheritDoc

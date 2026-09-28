@@ -7,11 +7,11 @@
 /** @noinspection PhpUnhandledExceptionInspection */
 SetupWebPage::AddModule(
 	__FILE__, // Path to the current file, all other file names are relative to the directory containing this file
-	'teemip-newsroom-provider/1.2.2',
+	'teemip-newsroom-provider/1.2.3',
 	array(
 		// Identification
 		//
-		'label' => 'TeemIp Newsroom Provider',
+		'label' => 'teemIp Newsroom Provider',
 		'category' => 'tools',
 
 		// Setup
