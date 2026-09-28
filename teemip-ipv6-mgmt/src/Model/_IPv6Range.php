@@ -557,11 +557,8 @@ EOF
 		$oLastIp = $this->Get('lastip');
 		$iSubnetId = $this->Get('subnet_id');
 
-		// If check is done during subnet expand, skip checks
-		if ($this->Get('write_reason') == 'expand') {
-			// Reset reason for action
-			$this->Set('write_reason', 'none');
-		} else {
+        // If check is done during subnet expand, skip checks
+        if ($this->Get('write_reason') != 'expand') {
 			// Check that 1st Ip is smaller than last one
 			if ($oFirstIp->IsBiggerOrEqual($oLastIp)) {
                 $this->AddCheckIssue(Dict::Format('UI:IPManagement:Action:New:IPRange:Reverted'));

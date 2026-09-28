@@ -169,7 +169,19 @@ class _IPv6Address extends IPAddress
 				}
 			}
 		}
-	}
+
+        // If IP Range is selected, make sure IP belongs to range
+        $iIpRangeId = $this->Get('range_id');
+        if ($iIpRangeId == 0) {
+            // No IP range set yet. Look for the only one that IP may belong to.
+            $oIpRangeSet = new CMDBObjectSet(DBObjectSearch::FromOQL("SELECT IPv6Range AS r WHERE r.firstip_text <= :ip AND :ip <= r.lastip_text AND r.org_id = :org_id", array('ip' => $sIp, 'org_id' => $iOrgId)));
+            if ($oIpRangeSet->Count() != 0) {
+                $oIpRange = $oIpRangeSet->Fetch();
+                $this->Set('range_id', $oIpRange->GetKey());
+            }
+        }
+
+    }
 
     /**
      * Handle Check To Write event
@@ -213,13 +225,6 @@ class _IPv6Address extends IPAddress
                     $this->AddCheckIssue(Dict::Format('UI:IPManagement:Action:New:IPAddress:NotInRange'));
 
 					return;
-				}
-			} else {
-				// If not look for IP Range that IP may belong to
-				$oIpRangeSet = new CMDBObjectSet(DBObjectSearch::FromOQL("SELECT IPv6Range AS r WHERE r.firstip_text <= :ip AND :ip <= r.lastip_text AND r.org_id = :org_id", array('ip' => $sIp, 'org_id' => $iOrgId)));
-				if ($oIpRangeSet->Count() != 0) {
-					$oIpRange = $oIpRangeSet->Fetch();
-					$this->Set('range_id', $oIpRange->GetKey());
 				}
 			}
 
