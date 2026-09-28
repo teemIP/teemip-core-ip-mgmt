@@ -15,6 +15,37 @@ use TeemIp\TeemIp\Extension\IPv6Management\Model\ormIPv6;
  */
 class AttributeIPv6Address extends AttributeString
 {
+    /**
+     * @inheritDoc
+     */
+    public function GetEditClass()
+    {
+        return "IPv6Address";
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function IsBasedOnDBColumns()
+    {
+        return true;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function IsScalar()
+    {
+        return true;
+    }
+    /**
+     * @inheritDoc
+     */
+    public function IsWritable()
+    {
+        return true;
+    }
+
 	/**
 	 * @param \DBObject|null $oHostObject
 	 *
@@ -86,6 +117,30 @@ class AttributeIPv6Address extends AttributeString
 		}
 
 		return $val1->Equals($val2);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function IsNull($proposedValue)
+	{
+		if (!($proposedValue instanceof ormIPv6)) {
+			return ($proposedValue == '');
+		}
+
+		return $proposedValue->Equals(new ormIPv6());
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function HasAValue($proposedValue): bool
+	{
+		if (!($proposedValue instanceof ormIPv6)) {
+			return parent::HasAValue($proposedValue);
+		}
+
+		return !$this->IsNull($proposedValue);
 	}
 
 	/**
