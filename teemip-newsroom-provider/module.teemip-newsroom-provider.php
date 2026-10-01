@@ -11,13 +11,13 @@ SetupWebPage::AddModule(
 	array(
 		// Identification
 		//
-		'label' => 'teemIp Newsroom Provider',
+		'label' => 'teemIP Newsroom Provider',
 		'category' => 'tools',
 
 		// Setup
 		//
 		'dependencies' => array(
-			'teemip-ip-mgmt/3.2.1',
+			'teemip-ip-mgmt/3.3.1',
 		),
 		'mandatory' => false,
 		'visible' => false,
