@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <licenses>
     <license>
-        <product>TeemIp</product>
+        <product>teemIP</product>
         <author>Christophe Naud</author>
         <license_type>AGPLv3</license_type>
         <text><![CDATA[
-<h3 style="text-align: center;">TeemIp</h3>
+<h3 style="text-align: center;">teemIP</h3>
 <pre>
-   Copyright (C) 2012-2023 TeemIp
+   Copyright (C) 2012-2026 teemIP
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU Affero General Public License as
