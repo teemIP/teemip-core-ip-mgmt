@@ -186,10 +186,10 @@ try {
 							break;
 					}
 				} else {
-					$sResult = "&nbsp;".Dict::Format('UI:ObjectCouldNotBeWritten', implode(', ', $aIssues));
+					$sResult = "&nbsp;".Dict::Format('UI:ObjectCouldNotBeWritten', implode(', ', array_map(['utils', 'HtmlEntities'], $aIssues)));
 				}
 			} else {
-				$sResult = implode(' ', $aErrors);
+				$sResult = implode(' ', array_map(['utils', 'HtmlEntities'], $aErrors));
 			}
 			$oP->add($sResult);
 			break;

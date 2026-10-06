@@ -104,14 +104,21 @@ class _IPv6Address extends IPAddress
 	{
 		// Disable ping if IP is created from a synchro... which may be the result of a discovery operation.
 		if (!ContextTag::Check('Synchro')) {
+			// IP is used in a shell command: make sure it is a valid IPv6 before going any further
+			if (filter_var($sIp, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
+				return array();
+			}
+			$sEscapedIp = escapeshellarg($sIp);
+			$iTimeToWait = (int)$iTimeToWait;
+
 			$sSystemType = strtoupper(php_uname($mode = "s"));
 			if (strpos($sSystemType,
 					'WIN') === false) {
 				// Unix type - what else?
-				$sCommand = "ping -c ".NUMBER_OF_PINGS." -W ".$iTimeToWait." ".$sIp;
+				$sCommand = "ping -c ".NUMBER_OF_PINGS." -W ".$iTimeToWait." ".$sEscapedIp;
 			} else {
 				// Windows
-				$sCommand = "ping -n ".NUMBER_OF_PINGS." -w ".($iTimeToWait * 1000)." ".$sIp;
+				$sCommand = "ping -n ".NUMBER_OF_PINGS." -w ".($iTimeToWait * 1000)." ".$sEscapedIp;
 			}
 			exec($sCommand,
 				$aOutput,
@@ -236,7 +243,7 @@ class _IPv6Address extends IPAddress
 			if ($sPingBeforeAssign == 'ping_yes') {
 				$aOutput = $this->DoCheckIpPings($this->Get('ip')->ToString(), TIME_TO_WAIT_FOR_PING_LONG);
 				if (!empty($aOutput)) {
-					$sOutput = '<br>'.implode('<br>', $aOutput);
+					$sOutput = ' | '.implode(' | ', array_filter($aOutput, 'strlen'));
                     $this->AddCheckIssue(Dict::S('UI:IPManagement:Action:New:IPAddress:IPPings').$sOutput);
 				}
 			}
