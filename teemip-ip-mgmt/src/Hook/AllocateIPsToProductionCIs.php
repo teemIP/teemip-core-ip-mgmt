@@ -91,6 +91,12 @@ class AllocateIPsToProductionCIs implements iScheduledProcess
 			return 'Process being disabled for the time being, execution has not run.';
 		}
 
+		// Don't run if CI statuses are shared with the release task, as IPs would be allocated and released at each run
+		$aConflictingStatus = IPUtils::GetStatusConflictsBetweenAllocationAndRelease();
+		if (!empty($aConflictingStatus)) {
+			return 'Status lists of ip_allocate_on_ci_status and ip_release_on_ci_status share the following status: '.implode(', ', $aConflictingStatus).'. Execution has not run.';
+		}
+
 		$aReport = array(
 			'ipchecked' => 0,
 		);

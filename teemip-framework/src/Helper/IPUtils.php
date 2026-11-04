@@ -24,6 +24,12 @@ class IPUtils
 	const IP_RELEASE_ON_CI_STATUS_FUNCTION_CODE = 'ip_release_on_ci_status';
 	const IP_RELEASE_ON_CI_STATUS_FUNCTION_SETTING_STATUS_LIST = 'status_list';
 	const IP_RELEASE_ON_CI_STATUS_DEFAULT_FUNCTION_SETTING_STATUS_LIST = array('obsolete');
+	const IP_ALLOCATE_ON_CI_STATUS_FUNCTION_CODE = 'ip_allocate_on_ci_status';
+	const IP_ALLOCATE_ON_CI_STATUS_FUNCTION_SETTING_STATUS_LIST = 'status_list';
+	const IP_ALLOCATE_ON_CI_STATUS_DEFAULT_FUNCTION_SETTING_STATUS_LIST = array('implementation', 'production');
+	// Same defaults as the background tasks of teemip-ip-mgmt
+	const IP_ON_CI_STATUS_FUNCTION_SETTING_ENABLED = 'enabled';
+	const IP_ON_CI_STATUS_DEFAULT_FUNCTION_SETTING_ENABLED = true;
 
 	/**
 	 * @param $sIp
@@ -515,9 +521,30 @@ class IPUtils
 	 */
 	public static function GetStatusThatDefineObsoleteCIs(): array
 	{
-		$aFunctionSettings = MetaModel::GetModuleSetting(static::MODULE_CODE, static::IP_RELEASE_ON_CI_STATUS_FUNCTION_CODE, static::IP_RELEASE_ON_CI_STATUS_DEFAULT_FUNCTION_SETTING_STATUS_LIST);
-		$aStatusList = $aFunctionSettings[static::IP_RELEASE_ON_CI_STATUS_FUNCTION_SETTING_STATUS_LIST];
+		$aFunctionSettings = MetaModel::GetModuleSetting(static::MODULE_CODE, static::IP_RELEASE_ON_CI_STATUS_FUNCTION_CODE, []);
 
-		return $aStatusList;
+		return (array)($aFunctionSettings[static::IP_RELEASE_ON_CI_STATUS_FUNCTION_SETTING_STATUS_LIST] ?? static::IP_RELEASE_ON_CI_STATUS_DEFAULT_FUNCTION_SETTING_STATUS_LIST);
+	}
+
+	/**
+	 * Get the CI statuses shared by the background tasks that allocate and release IPs according to the status of CIs.
+	 * When both tasks are enabled, such statuses would make IPs be allocated and released alternately at each run.
+	 *
+	 * @return array conflicting statuses, empty if there is none or if one of the tasks is disabled
+	 */
+	public static function GetStatusConflictsBetweenAllocationAndRelease(): array
+	{
+		$aAllocateSettings = MetaModel::GetModuleSetting(static::MODULE_CODE, static::IP_ALLOCATE_ON_CI_STATUS_FUNCTION_CODE, []);
+		$aReleaseSettings = MetaModel::GetModuleSetting(static::MODULE_CODE, static::IP_RELEASE_ON_CI_STATUS_FUNCTION_CODE, []);
+		$bAllocateEnabled = (bool)($aAllocateSettings[static::IP_ON_CI_STATUS_FUNCTION_SETTING_ENABLED] ?? static::IP_ON_CI_STATUS_DEFAULT_FUNCTION_SETTING_ENABLED);
+		$bReleaseEnabled = (bool)($aReleaseSettings[static::IP_ON_CI_STATUS_FUNCTION_SETTING_ENABLED] ?? static::IP_ON_CI_STATUS_DEFAULT_FUNCTION_SETTING_ENABLED);
+		if (!$bAllocateEnabled || !$bReleaseEnabled) {
+			return [];
+		}
+
+		$aAllocateStatusList = (array)($aAllocateSettings[static::IP_ALLOCATE_ON_CI_STATUS_FUNCTION_SETTING_STATUS_LIST] ?? static::IP_ALLOCATE_ON_CI_STATUS_DEFAULT_FUNCTION_SETTING_STATUS_LIST);
+		$aReleaseStatusList = (array)($aReleaseSettings[static::IP_RELEASE_ON_CI_STATUS_FUNCTION_SETTING_STATUS_LIST] ?? static::IP_RELEASE_ON_CI_STATUS_DEFAULT_FUNCTION_SETTING_STATUS_LIST);
+
+		return array_values(array_intersect($aAllocateStatusList, $aReleaseStatusList));
 	}
 }
